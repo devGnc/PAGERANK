@@ -11,7 +11,7 @@
 typedef struct {
   int id;                    
   int nb_links;              
-  int links[MAX_LINKS];      
+  int *links[MAX_LINKS];      
 } webpage_s;
 
 
@@ -169,7 +169,7 @@ void mat_vect_lmult(double mat[N][N], double vect[N], double res[N]){
       res[i] += mat[i][j] * vect[j];
     }
   }
-  print_mat(res);
+  print_vect(res);
   return;
 }
 
@@ -188,6 +188,22 @@ void test_mat_vect_lmult(){
 }
 
 webpage_s *init_webpage(int id, int nb_links, int *links) {
+  if (nb_links > MAX_LINKS || nb_links < 0){
+    printf("erreur sur le nombre de liens \n");
+    return NULL;
+  }
+  webpage_s *page = (webpage_s *)malloc(sizeof(webpage_s));
+  if (page ==NULL){
+    printf("Erreur d'allocation");
+    return NULL;
+  }
+  page->id = id;
+  page->nb_links = nb_links;
+
+  for (int i; i< nb_links; i++){
+    page -> links[i]=&links[i];
+  }
+  return page;
 }
 
 void init_trans_mat(double P[N][N], webpage_s *web_graph[N]){
