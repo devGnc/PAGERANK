@@ -14,7 +14,13 @@ typedef struct {
   int *links[MAX_LINKS];      
 } webpage_s;
 
-
+/*
+  Function: print_vect
+  Input: vect[N] (tableau de doubles)
+  Precondition: vect est un tableau de taille N
+  Output: Affichage des éléments du vecteur
+  Postcondition: Le vecteur est affiché à l'écran
+*/
 void print_vect(double vect[N]){
   /* body of the function */
   for (int i = 0; i < N; i++){
@@ -23,6 +29,7 @@ void print_vect(double vect[N]){
   return;
 }
 
+
 void test_print_vect(){
   /* write your tests here */
   double vect1[N] = {1, 2, 3, 4, 5, 6};
@@ -30,6 +37,13 @@ void test_print_vect(){
   return;
 }
 
+/*
+  Function: all_ones_vect
+  Input: vect[N] (tableau de doubles)
+  Precondition: vect est un tableau de taille N
+  Output: vect rempli avec des 1
+  Postcondition: Tous les éléments de vect sont égaux à 1
+*/
 void all_ones_vect(double vect[N]){
   /* body of the function */
   for (int i = 0; i < N; i++){
@@ -46,6 +60,13 @@ void test_all_ones_vect(){
   return;
 }
 
+/*
+  Function: print_mat
+  Input: mat[N][N] (matrice de doubles)
+  Precondition: mat est une matrice carrée de taille N x N
+  Output: Affichage des éléments de la matrice
+  Postcondition: La matrice est affichée à l'écran
+*/
 void print_mat(double mat[N][N]){
   /* body of the function */
   for (int i = 0; i < N; i++){
@@ -69,6 +90,13 @@ void test_print_mat(){
   return;
 }
 
+/*
+  Function: all_ones_mat
+  Input: mat[N][N] (matrice de doubles)
+  Precondition: mat est une matrice carrée de taille N x N
+  Output: Remplissage de mat avec des 1
+  Postcondition: Tous les éléments de mat sont égaux à 1
+*/
 void all_ones_mat(double mat[N][N]){
   /* body of the function */
   for (int i = 0; i < N; i++){
@@ -200,8 +228,8 @@ webpage_s *init_webpage(int id, int nb_links, int *links) {
   page->id = id;
   page->nb_links = nb_links;
 
-  for (int i; i< nb_links; i++){
-    page -> links[i]=&links[i];
+  for (int i = 0; i< nb_links; i++){
+    page -> links[i]=links[i];
   }
   return page;
 }
