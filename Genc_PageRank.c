@@ -11,7 +11,7 @@
 typedef struct {
   int id;                    
   int nb_links;              
-  int *links[MAX_LINKS];      
+  int *links;      
 } webpage_s;
 
 /*
@@ -217,27 +217,55 @@ void test_mat_vect_lmult(){
 
 webpage_s *init_webpage(int id, int nb_links, int *links) {
   if (nb_links > MAX_LINKS || nb_links < 0){
-    printf("erreur sur le nombre de liens \n");
+    printf("Erreur sur le nombre de liens\n");
     return NULL;
   }
+  
   webpage_s *page = (webpage_s *)malloc(sizeof(webpage_s));
-  if (page ==NULL){
-    printf("Erreur d'allocation");
+  if (page == NULL){
+    printf("Erreur d'allocation\n");
     return NULL;
   }
+
   page->id = id;
   page->nb_links = nb_links;
 
-  for (int i = 0; i< nb_links; i++){
-    page -> links[i]=&links[i];
+  page->links = (int *)malloc(nb_links * sizeof(int));
+  if (page->links == NULL) {
+    printf("Erreur d'allocation pour links\n");
+    free(page);
+    return NULL;
   }
+  
+  for (int i = 0; i < nb_links; i++) {
+    page->links[i] = links[i];
+  }
+
   return page;
 }
 
-void init_trans_mat(double P[N][N], webpage_s *web_graph[N]){
-  /* body of the function */
-  return;
+
+void init_trans_mat(double P[N][N], webpage_s *web_graph[N]) {
+    for (int i = 0; i < N; i++) {
+        int liens_sortants = web_graph[i]->nb_links;
+        if (liens_sortants == 0) {
+            for (int j = 0; j < N; j++) {
+                P[i][j] = 1.0 / N;
+            }
+        } else {
+            for (int j = 0; j < N; j++) {
+                P[i][j] = 0.0;
+            }
+            for (int j = 0; j < liens_sortants; j++) {
+                int target = web_graph[i]->links[j]; 
+                if (target >= 0 && target < N) {
+                    P[i][target] = 1.0 / liens_sortants;
+                }
+            }
+        }
+    }
 }
+
 
 void adj_trans_mat(double alpha, double P[N][N], double M[N][N]){
   /* body of the function */
