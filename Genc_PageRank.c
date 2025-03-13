@@ -229,7 +229,7 @@ webpage_s *init_webpage(int id, int nb_links, int *links) {
   page->nb_links = nb_links;
 
   for (int i = 0; i< nb_links; i++){
-    page -> links[i]=links[i];
+    page -> links[i]=&links[i];
   }
   return page;
 }
@@ -282,9 +282,21 @@ int main(int argc, char **argv){
 
   /* Web graph example */
   /* Declaration of webpages */
+  int wp0_links[3] = {1, 2, 3};
+  int wp1_links[2] = {0, 4};
+  int wp2_links[1] = {3};
+  int wp3_links[4] = {0, 1, 2, 5};
+  int wp4_links[2] = {0, 5};
+  int wp5_links[3] = {1, 2, 4};
+  webpage_s *wp0 = init_webpage(0, 3, wp0_links);  
+  webpage_s *wp1 = init_webpage(1, 2, wp1_links);  
+  webpage_s *wp2 = init_webpage(2, 1, wp2_links);  
+  webpage_s *wp3 = init_webpage(3, 4, wp3_links);  
+  webpage_s *wp4 = init_webpage(4, 2, wp4_links);  
+  webpage_s *wp5 = init_webpage(5, 3, wp5_links);  
 
   /* Declaration of the web graph */
-  webpage_s *web_graph[N] = {}; /* to change */
+  webpage_s *web_graph[N] = {wp0,wp1,wp2,wp3,wp4,wp5}; /* to change */
   
   /* PageRank algorithm */
   /* Variables */
